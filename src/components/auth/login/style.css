@@ -1,0 +1,67 @@
+.login-container {
+    width: 100%;
+    border: 1px soli    d red;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0px 0px 2px 0px;
+    padding: 10px;
+    height: 60vh;
+}
+
+.login-header {
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 24px;
+    text-align: center;
+    padding: 30px 0 30px 0;
+}
+
+.login-form {
+    text-align: center;
+}
+
+.login-form>input {
+    width: 90%;
+    margin: 12px 0 12px 0;
+    border: 1px solid black;
+    padding: 14px 10px 14px 10px;
+    font-family: Roboto, RobotoFallback, Noto Kufi Arabic, Helvetica, Arial, sans-serif;
+    border-radius: 2px;
+    border: none;
+    border-bottom: 2px solid black;
+}
+
+
+
+.forget-password {
+    text-decoration: underline;
+    color: blue
+}
+
+.login-btn{
+    width: 90%;
+    background-color: #03a9f4;
+    padding: 10px;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+.auth-log {
+    width: 90%;
+    background-color: #626f75;
+    padding: 3px;
+    border-radius: 2px;
+    font-weight: bold;
+    color: white;
+    margin-top: 5px;
+}
