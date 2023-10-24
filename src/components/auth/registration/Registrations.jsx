@@ -13,7 +13,7 @@ export const Registrations = () => {
           <input type="password" placeholder="password" />
           <input type="text" placeholder="address" />
           <br />
-          <button className="reg-btn">Login</button>
+          <button className="reg-btn">Sign up</button>
         </div>
       </div>
     </div>
