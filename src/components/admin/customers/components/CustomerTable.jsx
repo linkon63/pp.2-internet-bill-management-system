@@ -1,13 +1,9 @@
-import React from "react";
-
 export default function CustomerTable() {
   return (
     <div>
-      <h2>Data table will show here</h2>
-
-      <div className="container max-w-3xl px-4 mx-auto sm:px-8">
+      <div className="w-12/12">
         <div className="py-8">
-          <div className="px-4 py-4 -mx-4 overflow-x-auto sm:-mx-8 sm:px-8">
+          <div className="overflow-x-auto sm:-mx-8 sm:px-8">
             <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
               <table className="min-w-full leading-normal">
                 <thead>
