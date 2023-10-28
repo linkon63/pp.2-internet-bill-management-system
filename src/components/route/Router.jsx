@@ -2,16 +2,24 @@ import Customers from "../admin/customers/Customers";
 import Home from "../admin/home/Home";
 import { SignInPage } from "../auth/login/Login";
 import { Registrations } from "../auth/registration/Registrations";
+import ClientComplains from "../client/complains/ClientComplains";
+import ClientHome from "../client/home/ClientHome";
+import ClientPayment from "../client/payments/ClientPayment";
 import Layout from "../layout/Layout";
+import PrivateRoute from "./PrivateRoute";
 
 export const pageRoutes = [
   {
     path: "/",
-    element: <Layout />,
-    errorElement: <h1>Error ocurred in root route</h1>,
+    element: <PrivateRoute element={<Layout />} />,
+    // errorElement: <h1>404 Page Not Found</h1>,
     children: [
       {
         path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/admin/home",
         element: <Home />,
       },
       {
@@ -21,6 +29,23 @@ export const pageRoutes = [
       {
         path: "/customers",
         element: <Customers />,
+      },
+      //client routes
+      {
+        path: "/home",
+        element: <ClientHome />,
+      },
+      {
+        path: "/payment",
+        element: <ClientPayment />,
+      },
+      {
+        path: "/complains-service",
+        element: <ClientComplains />,
+      },
+      {
+        path: "*",
+        element: <h1>404 Page Not Found</h1>,
       },
     ],
   },
