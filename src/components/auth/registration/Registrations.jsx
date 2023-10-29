@@ -1,20 +1,27 @@
+import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../config/firebase.config";
 import "./style.css";
-import { useState } from "react";
 export const Registrations = () => {
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
-  const onSubmit = async (data) => {
+  const navigate = useNavigate();
+
+  const onRegistrationCustomer = async (data) => {
     console.log(data);
     setLoading(true);
     try {
       const docRef = await addDoc(collection(db, "customers"), {
         ...data,
       });
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef);
       setLoading(false);
+      sessionStorage.setItem("validUser", docRef.id);
+      sessionStorage.setItem("email", data.email);
+      sessionStorage.setItem("password", data.password);
+      navigate("/home");
     } catch (e) {
       console.error("Error adding document: ", e);
       setLoading(false);
@@ -29,13 +36,19 @@ export const Registrations = () => {
         <div className="reg-form">
           {loading ? (
             <button type="button" className="bg-indigo-500 ..." disabled>
-            <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
-              Loading
-            </svg>
-            Processing...
-          </button>
+              <svg
+                className="animate-spin h-5 w-5 mr-3 ..."
+                viewBox="0 0 24 24"
+              >
+                Loading
+              </svg>
+              Processing...
+            </button>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="reg-form">
+            <form
+              onSubmit={handleSubmit(onRegistrationCustomer)}
+              className="reg-form"
+            >
               <input
                 type="email"
                 {...register("email", { required: true })}
