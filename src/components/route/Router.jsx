@@ -6,13 +6,14 @@ import ClientComplains from "../client/complains/ClientComplains";
 import ClientHome from "../client/home/ClientHome";
 import ClientPayment from "../client/payments/ClientPayment";
 import Layout from "../layout/Layout";
+import ErrorPage from "../shared/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 
 export const pageRoutes = [
   {
     path: "/",
     element: <PrivateRoute element={<Layout />} />,
-    // errorElement: <h1>404 Page Not Found</h1>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
