@@ -6,14 +6,36 @@ import {
   BsFillChatHeartFill,
 } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../config/firebase.config";
+import ClientDashboardTable from "./components/ClientDashboardTable";
 export default function ClientHome() {
-  const [cardStatus, setCardStatus] = useState({});
+  const [states, setState] = useState({ complains: [], totalComplains: 0 });
   useEffect(() => {
-
+    fetchComplains();
   }, []);
+
+  const fetchComplains = async () => {
+    console.log("FetchComplains");
+    const email = sessionStorage.getItem("email");
+    const complainsRef = collection(db, "complains");
+    const q = query(complainsRef, where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+    const totalComplains = [];
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+      totalComplains.push(doc.data());
+    });
+    setState({
+      ...states,
+      complains: totalComplains,
+      totalComplains: totalComplains.length,
+    });
+  };
+
   return (
     <div className="h-full bg-white">
-      <div className="h-11/12">
+      <div className="h-11/12 border-3">
         <div className="border w-100  100 p-3 rounded flex justify-between items-center">
           <h2 className="font-bold text-2xl px-2">Welcome to Net Vision</h2>
           <div className="border rounded-3xl p-3 bg-indigo-600">
@@ -67,7 +89,8 @@ export default function ClientHome() {
                   Total complains from you
                 </div>
                 <span className="text-5xl text-grey-darkest">
-                  10<span className="text-lg"> / in this Month</span>
+                  {states.totalComplains}
+                  <span className="text-lg"> / in this Month</span>
                 </span>
                 <div className="flex items-center mt-4">
                   <div className="pr-2 text-xs">
@@ -108,8 +131,15 @@ export default function ClientHome() {
             </div>
           </div>
         </div>
+        <div className="flex">
+          <div className="border-3 mt-10 w-3/6">
+            <ClientDashboardTable />
+          </div>
+          <div className="border-3 mt-10 w-3/6">
+            <ClientDashboardTable />
+          </div>
+        </div>
       </div>
-      {/* <ClientDashboard /> */}
     </div>
   );
 }

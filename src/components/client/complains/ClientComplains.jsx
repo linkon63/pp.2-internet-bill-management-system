@@ -14,6 +14,7 @@ export default function ClientComplains() {
     try {
       const docRef = await addDoc(collection(db, "complains"), {
         ...data,
+        createAt: new Date().toLocaleDateString(),
       });
       console.log("Document written with ID: ", docRef);
       reset();
