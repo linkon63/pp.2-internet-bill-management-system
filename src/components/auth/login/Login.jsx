@@ -26,6 +26,7 @@ export const SignInPage = () => {
       sessionStorage.setItem("validUser", doc.id);
       sessionStorage.setItem("email", doc.data().email);
       sessionStorage.setItem("password", doc.data().password);
+      sessionStorage.setItem("user", doc.data());
     });
     if (loginFlag === true) {
       navigate("/home");

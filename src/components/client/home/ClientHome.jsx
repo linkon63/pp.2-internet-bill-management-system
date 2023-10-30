@@ -5,18 +5,22 @@ import {
   BsFillBugFill,
   BsFillChatHeartFill,
 } from "react-icons/bs";
-// import ClientDashboard from "./components/ClientDashboard";
+import { useEffect, useState } from "react";
 export default function ClientHome() {
+  const [cardStatus, setCardStatus] = useState({});
+  useEffect(() => {
+
+  }, []);
   return (
-    <div className="h-full">
+    <div className="h-full bg-white">
       <div className="h-11/12">
-        <div className="border w-100 bg-white 100 p-3 rounded flex justify-between items-center">
+        <div className="border w-100  100 p-3 rounded flex justify-between items-center">
           <h2 className="font-bold text-2xl px-2">Welcome to Net Vision</h2>
           <div className="border rounded-3xl p-3 bg-indigo-600">
             <BsFillPersonFill className="text-white" />
           </div>
         </div>
-        <div className="bg-blue-lightest mt-10 grid grid-gap w-full grid-cols-1 md:grid-cols-1 lg:grid-cols-3">
+        <div className="  bg-blue-lightest mt-10 grid grid-gap gap-4 w-full grid-cols-1 md:grid-cols-1 lg:grid-cols-3 ps-12">
           <div className="bg-sky-500 w-5/6 h-48 rounded shadow-md flex card text-yellow-50">
             <div className="w-full flex flex-col">
               <div className="p-4 pb-0 flex-1">

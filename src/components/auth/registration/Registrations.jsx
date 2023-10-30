@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../config/firebase.config";
@@ -21,7 +21,7 @@ export const Registrations = () => {
       sessionStorage.setItem("validUser", docRef.id);
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("password", data.password);
-      navigate("/home");
+      navigate("/login");
     } catch (e) {
       console.error("Error adding document: ", e);
       setLoading(false);
