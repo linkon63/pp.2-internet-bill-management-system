@@ -2,7 +2,7 @@ import { useState } from "react";
 import netVisionLogo from "../assests/images/net-vision-image.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 export default function Layout() {
-  const [admin, setAdmin] = useState({ status: false });
+  const [admin, setAdmin] = useState({ status: true });
   const [layoutStyle, setLayoutStyle] = useState({
     hide: false,
     width: "80%",
