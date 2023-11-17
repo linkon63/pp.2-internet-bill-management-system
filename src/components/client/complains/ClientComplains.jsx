@@ -96,7 +96,7 @@ export default function ClientComplains() {
                     className="w-full border-b-2 border-black p-2"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-3">
+                <div className="col-span-2 ">
                   <label className="text-sm">Email</label>
                   <input
                     defaultValue={sessionStorage.getItem("email") || ""}
@@ -107,7 +107,7 @@ export default function ClientComplains() {
                     className="w-full border-b-2 border-black p-2"
                   />
                 </div>
-                <div className="col-span-full">
+                <div className="col-span-2">
                   <label className="text-sm">Address</label>
                   <input
                     {...register("address", { required: true })}
@@ -117,7 +117,7 @@ export default function ClientComplains() {
                     className="w-full border-b-2 border-black p-2"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-2">
+                <div className="col-span-1 sm:col-span-2">
                   <label className="text-sm">City</label>
                   <input
                     {...register("city", { required: false })}
@@ -127,7 +127,7 @@ export default function ClientComplains() {
                     className="w-full border-b-2 border-black p-2"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-4">
+                <div className="col-span-full">
                   <label className="text-sm">Descriptions</label>
                   <input
                     {...register("description", { required: true })}
@@ -137,7 +137,7 @@ export default function ClientComplains() {
                   />
                 </div>
                 <button
-                  className="login-btn bg-indigo-600 rounded"
+                  className="login-btn bg-indigo-600 rounded col-span-full"
                   type="submit"
                 >
                   Submit
