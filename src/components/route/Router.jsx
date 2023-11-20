@@ -9,7 +9,7 @@ import Layout from "../layout/Layout";
 import ErrorPage from "../shared/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 
-export const pageRoutes = [
+export const PageRoutes = [
   {
     path: "/",
     element: <PrivateRoute element={<Layout />} />,
