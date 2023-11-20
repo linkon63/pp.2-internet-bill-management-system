@@ -28,6 +28,9 @@ export default function ClientPayment() {
 
   return (
     <div className="h-[100vh] bg-white">
+
+
+
       {/* complains form */}
       <section className="p-6 dark:bg-white dark:text-black h-4/6 flex items-center justify-center">
         {loading ? (
@@ -84,6 +87,15 @@ export default function ClientPayment() {
                     className="w-full border-b-2 border-black p-2"
                   />
                 </div>
+                {/* <div className="col-span-full sm:col-span-2">
+                  <label className="text-sm">Date</label>
+                  <input
+                    {...register("date", { required: false })}
+                    id="date"
+                    type="date"
+                    className="w-full border-b-2 border-black p-2"
+                  />
+                </div> */}
                 <div className="col-span-full sm:col-span-2">
                   <button
                     className="login-btn bg-indigo-600 rounded"
