@@ -1,7 +1,18 @@
+import { useState } from "react";
+import { CustomerEditModal } from "./modals/CustomerEditModal";
+
 export default function CustomerTable({ customer }) {
-  console.log("table allCustomers", customer);
+  const [openModal, setOpenModal] = useState(false);
+  const [email, setEmail] = useState("");
+
+  function onCloseModal() {
+    setOpenModal(false);
+    setEmail("");
+  }
+
   return (
     <div>
+      <CustomerEditModal openModal={openModal} setOpenModal={set}, onCloseModal />
       <div className="w-12/12 h-100">
         <div className="">
           <div className="overflow-x-auto sm:-mx-8 sm:px-8">
@@ -42,7 +53,7 @@ export default function CustomerTable({ customer }) {
                 <tbody className="h-vh">
                   {customer.length > 0 &&
                     customer.map((c) => (
-                      <tr key={c.name}>
+                      <tr key={c.name} onClick={() => console.log("c", c)}>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {c.name}
