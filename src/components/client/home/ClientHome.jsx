@@ -16,16 +16,17 @@ export default function ClientHome() {
   }, []);
 
   const fetchComplains = async () => {
-    console.log("FetchComplains");
+    // console.log("FetchComplains");
     const email = sessionStorage.getItem("email");
     const complainsRef = collection(db, "complains");
     const q = query(complainsRef, where("email", "==", email));
-    const querySnapshot = await getDocs(q);
     const totalComplains = [];
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
+      // console.log(doc.id, " => ", doc.data());
       totalComplains.push(doc.data());
     });
+    console.log("FetchComplains", totalComplains);
     setState({
       ...states,
       complains: totalComplains,
@@ -42,100 +43,37 @@ export default function ClientHome() {
             <BsFillPersonFill className="text-white" />
           </div>
         </div>
-        <div className="  bg-blue-lightest mt-10 grid grid-gap gap-4 w-full grid-cols-1 md:grid-cols-1 lg:grid-cols-3 ps-12">
-          <div className="bg-sky-500 w-5/6 h-48 rounded shadow-md flex card text-yellow-50">
-            <div className="w-full flex flex-col">
-              <div className="p-4 pb-0 flex-1">
-                <div className="flex items-center">
-                  <div className="text-4xl font-light">
-                    <BsFillPipFill />
-                  </div>
-                  <div>
-                    <h3 className="text-grey-darkest font-bold ms-2">
-                      Payment Status
-                    </h3>
-                  </div>
-                </div>
-                <div className="text-xs flex items-center mb-4">
-                  <i className="fas fa-map-marker-alt mr-1 text-grey-dark"></i>
-                  Your payment of this month
-                </div>
-                <span className="text-5xl text-grey-darkest">
-                  500<span className="text-lg">tk / Month</span>
-                </span>
-                <div className="flex items-center mt-4">
-                  <div className="pr-2 text-xs">
-                    <i className="fas fa-wifi text-green"></i> For WiFi service
-                  </div>
-                </div>
-              </div>
+        <div className="pt-4 grid grid-gap gap-4 w-full grid-cols-1 md:grid-cols-1 lg:grid-cols-3 ps-4 pe-4">
+          <div className="bg-sky-500 rounded-xl p-4">
+            <div className="p-4 text-white font-bold flex justify-between items-center">
+              <p className="flex justify-start items-center text-lg">
+                <BsFillPipFill /> <span className="ps-2">Payment Status</span>
+              </p>
+              <p className="text-lg font-light">500 tk/m</p>
             </div>
           </div>
-          <div className="bg-green-200 w-5/6 h-48 rounded shadow-md flex card text-gray-900">
-            <div className="w-full flex flex-col">
-              <div className="p-4 pb-0 flex-1">
-                <div className="flex items-center">
-                  <div className="text-4xl font-light">
-                    <BsFillBugFill />
-                  </div>
-                  <div>
-                    <h3 className="text-grey-darkest font-bold ms-2">
-                      Complains
-                    </h3>
-                  </div>
-                </div>
-                <div className="text-xs flex items-center mb-4">
-                  <i className="fas fa-map-marker-alt mr-1 text-grey-dark"></i>
-                  Total complains from you
-                </div>
-                <span className="text-5xl text-grey-darkest">
-                  {states.totalComplains}
-                  <span className="text-lg"> / in this Month</span>
-                </span>
-                <div className="flex items-center mt-4">
-                  <div className="pr-2 text-xs">
-                    <i className="fas fa-wifi text-green"></i> WiFi
-                  </div>
-                </div>
-              </div>
+          <div className="bg-green-200 rounded-xl p-4">
+            <div className="p-4 text-dark font-bold flex justify-between items-center">
+              <p className="flex justify-start items-center text-lg">
+                <BsFillPipFill /> <span className="ps-2">Complains</span>
+              </p>
+              <p className="text-lg font-light">
+                {states.totalComplains && states.totalComplains} per month
+              </p>
             </div>
           </div>
-
-          <div className="bg-white w-5/6 h-48 rounded shadow-md flex card text-sky-500">
-            <div className="w-full flex flex-col">
-              <div className="p-4 pb-0 flex-1">
-                <div className="flex items-center">
-                  <div className="text-4xl font-light">
-                    <BsFillChatHeartFill />
-                  </div>
-                  <div>
-                    <h3 className="text-grey-darkest font-bold ms-2">
-                      Solved Complains
-                    </h3>
-                  </div>
-                </div>
-                <div className="text-xs flex items-center mb-4">
-                  <i className="fas fa-map-marker-alt mr-1 text-grey-dark"></i>
-                  Total solved complains from the service provider
-                </div>
-                <span className="text-5xl text-grey-darkest">
-                  06<span className="text-lg">/in this Month</span>
-                </span>
-                <div className="flex items-center mt-4">
-                  <div className="pr-2 text-xs">
-                    <i className="fas fa-wifi text-green"></i> We take care
-                    about you
-                  </div>
-                </div>
-              </div>
+          <div className="bg-yellow-500 rounded-xl p-4">
+            <div className="p-4 text-white font-bold flex justify-between items-center">
+              <p className="flex justify-start items-center text-lg">
+                <BsFillChatHeartFill />{" "}
+                <span className="ps-2">Solve Problems</span>
+              </p>
+              <p className="text-lg font-light">5 recent</p>
             </div>
           </div>
         </div>
-        <div className="flex">
-          <div className="border-3 mt-10 w-3/6">
-            <ClientDashboardTable />
-          </div>
-          <div className="border-3 mt-10 w-3/6">
+        <div className="">
+          <div className="w-6/6">
             <ClientDashboardTable />
           </div>
         </div>
