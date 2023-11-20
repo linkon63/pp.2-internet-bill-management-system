@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import netVisionLogo from "../assests/images/net-vision-image.png";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 export default function Layout() {
-  const [admin, setAdmin] = useState({ status: true });
+  const [admin, setAdmin] = useState({ status: false });
   const [layoutStyle, setLayoutStyle] = useState({
     hide: false,
     width: "80%",
   });
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const admin = sessionStorage.getItem("admin");
+    if (admin) {
+      setAdmin({ status: true });
+    }
+  }, []);
+
   const logout = () => {
     sessionStorage.removeItem("validUser");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("password");
+    sessionStorage.removeItem("admin");
     navigate("/sing-in");
     window.location.reload();
   };

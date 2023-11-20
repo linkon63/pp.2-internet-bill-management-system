@@ -28,6 +28,9 @@ export const SignInPage = () => {
       sessionStorage.setItem("email", doc.data().email);
       sessionStorage.setItem("password", doc.data().password);
       sessionStorage.setItem("user", doc.data());
+      if (doc.data().admin == true) {
+        sessionStorage.setItem("admin", doc.data().admin);
+      }
     });
     if (loginFlag === true) {
       navigate("/home");

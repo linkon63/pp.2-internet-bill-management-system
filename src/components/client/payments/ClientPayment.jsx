@@ -87,7 +87,7 @@ export default function ClientPayment() {
                     className="w-full border-b-2 border-black p-2"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-2">
+                {/* <div className="col-span-full sm:col-span-2">
                   <label className="text-sm">Date</label>
                   <input
                     {...register("date", { required: false })}
@@ -95,10 +95,10 @@ export default function ClientPayment() {
                     type="date"
                     className="w-full border-b-2 border-black p-2"
                   />
-                </div>
+                </div> */}
                 <div className="col-span-full sm:col-span-2">
                   <button
-                    className="login-btn bg-indigo-600 rounded"
+                    className="login-btn bg-indigo-600 rounded w-100 p-2 mt-6"
                     type="submit"
                   >
                     Submit
