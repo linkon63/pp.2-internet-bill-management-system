@@ -12,7 +12,11 @@ export default function CustomerTable({ customer }) {
 
   return (
     <div>
-      <CustomerEditModal openModal={openModal} setOpenModal={set}, onCloseModal />
+      <CustomerEditModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        onCloseModal={onCloseModal}
+      />
       <div className="w-12/12 h-100">
         <div className="">
           <div className="overflow-x-auto sm:-mx-8 sm:px-8">
