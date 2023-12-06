@@ -1,11 +1,18 @@
-import { addDoc, collection } from "firebase/firestore";
-import { useState } from "react";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { db } from "../../config/firebase.config";
+import ClientDashboardTable from "../home/components/ClientDashboardTable";
+import ClientComplainModal from "./ClientComplainModal";
 
 export default function ClientComplains() {
   const { register, handleSubmit, reset } = useForm();
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
 
   const promoCode = sessionStorage.getItem("validUser").slice(0, 8);
   const onSubmitClient = async (data) => {
@@ -24,6 +31,37 @@ export default function ClientComplains() {
       setLoading(false);
     }
   };
+
+  const [states, setState] = useState({ complains: [], totalComplains: 0 });
+
+  const fetchComplains = async () => {
+    // console.log("FetchComplains");
+    const email = sessionStorage.getItem("email");
+    const complainsRef = collection(db, "complains");
+    const q = query(complainsRef, where("email", "==", email));
+    const totalComplains = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.id, " => ", doc.data());
+      totalComplains.push(doc.data());
+    });
+    console.log("FetchComplains", totalComplains);
+    setState({
+      ...states,
+      complains: totalComplains,
+      totalComplains: totalComplains.length,
+    });
+  }
+
+  useEffect(() => {
+    fetchComplains();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const refetch = () => {
+    fetchComplains();
+  };
+
   return (
     <div className="h-[100vh] bg-white">
       {/* offers section */}
@@ -52,7 +90,7 @@ export default function ClientComplains() {
         </div>
       </div>
       {/* complains form */}
-      <section className="p-6 dark:bg-white dark:text-black h-4/6 flex items-center justify-center">
+      {/* <section className="p-6 dark:bg-white dark:text-black h-4/6 flex items-center justify-center">
         {loading ? (
           <button type="button" className="bg-indigo-500 ..." disabled>
             <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
@@ -146,7 +184,29 @@ export default function ClientComplains() {
             </fieldset>
           </form>
         )}
+      </section> */}
+      <section className="p-6 border dark:bg-white dark:text-black flex items-center justify-center">
+        <button onClick={toggleModal} className="bg-indigo-600 text-white py-2 px-4 rounded">
+          Open Complaint Form
+        </button>
+        <ClientComplainModal
+          isOpen={modalOpen}
+          closeModal={toggleModal}
+          onSubmitClient={onSubmitClient}
+          setLoading={setLoading}
+          register={register}
+          handleSubmit={handleSubmit}
+          reset={reset}
+          refetch={refetch}
+        />
       </section>
+
+      {/* table */}
+      <div>
+        <ClientDashboardTable
+          complains={states.complains}
+        />
+      </div>
     </div>
   );
 }
