@@ -74,7 +74,9 @@ export default function ClientHome() {
         </div>
         <div className="">
           <div className="w-6/6">
-            <ClientDashboardTable />
+            <ClientDashboardTable
+              complains={states.complains}
+            />
           </div>
         </div>
       </div>

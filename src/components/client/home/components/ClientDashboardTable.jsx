@@ -1,81 +1,49 @@
-export default function ClientDashboardTable() {
+'use client';
+import { Table } from 'flowbite-react';
+// eslint-disable-next-line react/prop-types
+export default function ClientDashboardTable({ complains }) {
+  console.log(complains)
   return (
-    <div className="mt-2">
-      <div className="container p-2 py-10 mx-auto sm:p-4 dark:text-black-100">
-        <h2 className="mb-4 text-2xl font-semibold text-black">Invoices</h2>
-        <div className="overflow-y-scroll">
-          <table className="min-w-full text-xs ">
-            <colgroup>
-              <col />
-              <col />
-              <col />
-              <col />
-              <col />
-              <col className="w-24" />
-            </colgroup>
-            <thead className="dark:bg-white-700 border-2">
-              <tr className="text-left">
-                <th className="p-3 border">Invoice #</th>
-                <th className="p-3 border">Client</th>
-                <th className="p-3 border">Issued</th>
-                <th className="p-3 border">Due</th>
-                <th className="p-3 border text-right">Amount</th>
-                <th className="p-3 border">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-opacity-20 dark:border-gray-700 dark:bg-white-900">
-                <td className="p-3">
-                  <p>97412378923</p>
-                </td>
-                <td className="p-3">
-                  <p>Microsoft Corporation</p>
-                </td>
-                <td className="p-3">
-                  <p>14 Jan 2022</p>
-                  <p className="dark:text-gray-400">Friday</p>
-                </td>
-                <td className="p-3">
-                  <p>01 Feb 2022</p>
-                  <p className="dark:text-gray-400">Tuesday</p>
-                </td>
-                <td className="p-3 text-right">
-                  <p>$15,792</p>
-                </td>
-                <td className="p-3 text-right">
-                  <span className="px-3 py-1 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">
-                    <span>Pending</span>
-                  </span>
-                </td>
-              </tr>
-              <tr className="border-b border-opacity-20 dark:border-gray-700 dark:bg-white-900">
-                <td className="p-3">
-                  <p>97412378923</p>
-                </td>
-                <td className="p-3">
-                  <p>Microsoft Corporation</p>
-                </td>
-                <td className="p-3">
-                  <p>14 Jan 2022</p>
-                  <p className="dark:text-gray-400">Friday</p>
-                </td>
-                <td className="p-3">
-                  <p>01 Feb 2022</p>
-                  <p className="dark:text-gray-400">Tuesday</p>
-                </td>
-                <td className="p-3 text-right">
-                  <p>$15,792</p>
-                </td>
-                <td className="p-3 text-right">
-                  <span className="px-3 py-1 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">
-                    <span>Pending</span>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div className="overflow-x-auto">
+      <Table hoverable>
+        <Table.Head>
+          <Table.HeadCell>SL</Table.HeadCell>
+          <Table.HeadCell>Customer Name</Table.HeadCell>
+          <Table.HeadCell>Email</Table.HeadCell>
+          <Table.HeadCell>Description</Table.HeadCell>
+          <Table.HeadCell>City</Table.HeadCell>
+          <Table.HeadCell>Address</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y">
+
+          {
+            // eslint-disable-next-line react/prop-types
+            complains.map((item, index) =>
+              <Table.Row key={index}  className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                 {index+1}
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                 {item.firstName}  {item.lastName}
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                 {item.email}
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                 {item.description}
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                 {item.city}
+                </Table.Cell>
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                 {item.address}
+                </Table.Cell>
+              </Table.Row>
+            )
+          }
+
+        </Table.Body>
+      </Table>
     </div>
   );
 }
