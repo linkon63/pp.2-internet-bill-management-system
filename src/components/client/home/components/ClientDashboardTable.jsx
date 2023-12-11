@@ -1,5 +1,5 @@
 'use client';
-import { Table } from 'flowbite-react';
+import { Badge, Table } from 'flowbite-react';
 
 export default function ClientDashboardTable({ complains }) {
   console.log(complains)
@@ -39,7 +39,7 @@ export default function ClientDashboardTable({ complains }) {
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                  {item?.address}
                 </Table.Cell>
-                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white text-center">
                  {item.status ?  item.status : <Badge color="failure">Failure</Badge>}
                 </Table.Cell>
               </Table.Row>
