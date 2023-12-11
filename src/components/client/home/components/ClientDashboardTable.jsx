@@ -10,7 +10,7 @@ export default function ClientDashboardTable({ complains }) {
           <Table.HeadCell>SL</Table.HeadCell>
           <Table.HeadCell>Customer Name</Table.HeadCell>
           <Table.HeadCell>Email</Table.HeadCell>
-          <Table.HeadCell>Description</Table.HeadCell>
+          <Table.HeadCell>Complains</Table.HeadCell>
           <Table.HeadCell>City</Table.HeadCell>
           <Table.HeadCell>Address</Table.HeadCell>
           <Table.HeadCell>Status</Table.HeadCell>
@@ -40,7 +40,7 @@ export default function ClientDashboardTable({ complains }) {
                  {item?.address}
                 </Table.Cell>
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white text-center">
-                 {item.status ?  item.status : <Badge color="failure">Failure</Badge>}
+                 {item.status ? <Badge color="success">Solved</Badge> : <Badge color="failure">Not Solve</Badge>}
                 </Table.Cell>
               </Table.Row>
             )
