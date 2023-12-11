@@ -4,7 +4,11 @@ import { useForm } from "react-hook-form";
 import { db } from "../../config/firebase.config";
 import { Spinner } from "flowbite-react";
 import BlockQuoteVision from "../../shared/BlockQuoteVision";
-
+import PaymentCard from "./PaymentCard";
+// import { loadStripe } from "@stripe/stripe-js";
+// const stripePromise = loadStripe(
+//   "pk_test_51Ie1JhBHVweerPiKD5ZiauHVxaum4XV1yLjMsUHfkMPf2T7UKNlyHOJ0u0JDpztqmYSfu9R9nRsTA8gydkmksxSr00UdXEF7bv"
+// );
 export default function ClientPayment() {
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false);
@@ -41,7 +45,17 @@ export default function ClientPayment() {
                 "Billing and Payment Center: Seamless Transactions with NetVision"
               }
             />
-            <form
+            <div>
+              <PaymentCard />
+            </div>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+{
+  /* <form
               onSubmit={handleSubmit(onSubmitClient)}
               className="container flex flex-col mx-auto space-y-12 mt-10"
             >
@@ -95,21 +109,16 @@ export default function ClientPayment() {
                     type="date"
                     className="w-full border-b-2 border-black p-2"
                   />
-                </div> */}
-                  <div className="col-span-full sm:col-span-2">
-                    <button
-                      className="login-btn bg-indigo-600 rounded w-100 p-2 mt-6"
-                      type="submit"
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </div>
-              </fieldset>
-            </form>
-          </div>
-        )}
-      </section>
-    </div>
-  );
+                </div> */
 }
+//       <div className="col-span-full sm:col-span-2">
+//         <button
+//           className="login-btn bg-indigo-600 rounded w-100 p-2 mt-6"
+//           type="submit"
+//         >
+//           Submit
+//         </button>
+//       </div>
+//     </div>
+//   </fieldset>
+// </form> */}
