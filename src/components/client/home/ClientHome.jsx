@@ -58,7 +58,7 @@ export default function ClientHome() {
                 <BsFillPipFill /> <span className="ps-2">Complains</span>
               </p>
               <p className="text-lg font-light">
-                {states.totalComplains && states.totalComplains} per month
+                {states.totalComplains && states.totalComplains} in total
               </p>
             </div>
           </div>
