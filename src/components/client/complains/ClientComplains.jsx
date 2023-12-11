@@ -51,7 +51,7 @@ export default function ClientComplains() {
       complains: totalComplains,
       totalComplains: totalComplains.length,
     });
-  }
+  };
 
   useEffect(() => {
     fetchComplains();
@@ -185,27 +185,33 @@ export default function ClientComplains() {
           </form>
         )}
       </section> */}
-      <section className="p-6 border dark:bg-white dark:text-black flex items-center justify-center">
-        <button onClick={toggleModal} className="bg-indigo-600 text-white py-2 px-4 rounded">
-          Open Complaint Form
+      <section className="px-2 dark:bg-white dark:text-black">
+        <button
+          onClick={toggleModal}
+          className="bg-indigo-600 text-white py-2 px-4 rounded"
+        >
+          New Complain
         </button>
-        <ClientComplainModal
-          isOpen={modalOpen}
-          closeModal={toggleModal}
-          onSubmitClient={onSubmitClient}
-          setLoading={setLoading}
-          register={register}
-          handleSubmit={handleSubmit}
-          reset={reset}
-          refetch={refetch}
-        />
       </section>
 
       {/* table */}
+      <div className="px-2">
+        <ClientDashboardTable complains={states.complains} />
+      </div>
+      {/* modal open/close here */}
       <div>
-        <ClientDashboardTable
-          complains={states.complains}
-        />
+        {modalOpen && (
+          <ClientComplainModal
+            isOpen={modalOpen}
+            closeModal={toggleModal}
+            onSubmitClient={onSubmitClient}
+            setLoading={setLoading}
+            register={register}
+            handleSubmit={handleSubmit}
+            reset={reset}
+            refetch={refetch}
+          />
+        )}
       </div>
     </div>
   );
