@@ -1,39 +1,42 @@
 import { useState } from "react";
-import { CustomerEditModal } from "./modals/CustomerEditModal";
+import { CustomerAddEditModal } from "./modals/CustomerAddEditModal";
 
 export default function CustomerTable({ customer }) {
-  const [openModal, setOpenModal] = useState(false);
-  const [email, setEmail] = useState("");
-
-  function onCloseModal() {
-    setOpenModal(false);
-    setEmail("");
-  }
-
+  console.log("🧑‍💻🧑‍💻🧑‍💻🧑‍💻", customer);
   return (
     <div>
-      <CustomerEditModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        onCloseModal={onCloseModal}
-      />
       <div className="w-12/12 h-100">
         <div className="">
           <div className="overflow-x-auto sm:-mx-8 sm:px-8">
             <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
-              <table className="w-full leading-normal">
+              <table
+                className="w-full leading-normal"
+                key={Math.random() + Math.random() * 100}
+              >
                 <tr>
                   <th
                     scope="col"
                     className="px-5 py-3 text-sm font-bold text-left text-gray-800 uppercase bg-white border-b border-gray-200"
                   >
-                    Name
+                    SN
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-3 text-sm font-bold text-left text-gray-800 uppercase bg-white border-b border-gray-200"
+                  >
+                    UserName
                   </th>
                   <th
                     scope="col"
                     className="font-bold px-5 py-3 text-sm text-left text-gray-800 uppercase bg-white border-b border-gray-200"
                   >
-                    Age
+                    internetID
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-3 text-sm font-bold text-left text-gray-800 uppercase bg-white border-b border-gray-200"
+                  >
+                    Password
                   </th>
                   <th
                     scope="col"
@@ -45,27 +48,34 @@ export default function CustomerTable({ customer }) {
                     scope="col"
                     className="px-5 py-3 text-sm font-bold text-left text-gray-800 uppercase bg-white border-b border-gray-200"
                   >
-                    Created at
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-5 py-3 text-sm font-bold text-left text-gray-800 uppercase bg-white border-b border-gray-200"
-                  >
-                    status
+                    Action
                   </th>
                 </tr>
                 <tbody className="h-vh">
                   {customer.length > 0 &&
-                    customer.map((c) => (
-                      <tr key={c.name} onClick={() => console.log("c", c)}>
+                    customer.map((c, index) => (
+                      <tr
+                        key={c.name + index}
+                        onClick={() => console.log("c", c)}
+                      >
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                           <p className="text-gray-900 whitespace-no-wrap">
-                            {c.name}
+                            {index + 1}
                           </p>
                         </td>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                           <p className="text-gray-900 whitespace-no-wrap">
-                            {c.age}
+                            {c.userName}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {c.internetID}
+                          </p>
+                        </td>
+                        <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {c.password}
                           </p>
                         </td>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
@@ -74,14 +84,36 @@ export default function CustomerTable({ customer }) {
                           </p>
                         </td>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {c.createAt}
-                          </p>
-                        </td>
-                        <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {c.status}
-                          </p>
+                          <button
+                            type="button"
+                            className="px-4"
+                            onClick={() => console.log("edit user")}
+                          >
+                            <svg
+                              className="w-6 h-6 text-gray-800 dark:text-white"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 20 18"
+                            >
+                              <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm-1.391 7.361.707-3.535a3 3 0 0 1 .82-1.533L7.929 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h4.259a2.975 2.975 0 0 1-.15-1.639ZM8.05 17.95a1 1 0 0 1-.981-1.2l.708-3.536a1 1 0 0 1 .274-.511l6.363-6.364a3.007 3.007 0 0 1 4.243 0 3.007 3.007 0 0 1 0 4.243l-6.365 6.363a1 1 0 0 1-.511.274l-3.536.708a1.07 1.07 0 0 1-.195.023Z" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            className=""
+                            onClick={() => console.log("delete user")}
+                          >
+                            <svg
+                              className="w-6 h-6 text-gray-800 dark:text-white"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 18 20"
+                            >
+                              <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z" />
+                            </svg>
+                          </button>
                         </td>
                       </tr>
                     ))}
