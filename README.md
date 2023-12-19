@@ -4,14 +4,14 @@ Welcome to the Internet Bill Management React Project — a sophisticated soluti
 Note :If you are passionate about web development, user-centric design, and want to contribute to a project that addresses real-world challenges in the telecommunications industry, this is the perfect repository for you.
 
 # Features
-Customer Panel:
+## Customer Panel:
 Dashboard: Customers can view and manage their bills, payment history, and account details, issue solved and other info.
 
 Complaints: Users can submit complaints, and track the status of their issues.
 
 Payments: Secure payment processing through the Stripe payment gateway.
 
-Admin Panel:
+## Admin Panel:
 Dashboard: Admins have access to a comprehensive dashboard displaying customer payment details, complaint statistics, and overall system performance.
 
 User Management: Create, update, and delete user accounts. Assign technicians to handle customer complaints.
