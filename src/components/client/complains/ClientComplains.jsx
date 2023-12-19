@@ -51,7 +51,7 @@ export default function ClientComplains() {
       complains: totalComplains,
       totalComplains: totalComplains.length,
     });
-  }
+  };
 
   useEffect(() => {
     fetchComplains();
@@ -89,123 +89,33 @@ export default function ClientComplains() {
           </div>
         </div>
       </div>
-      {/* complains form */}
-      {/* <section className="p-6 dark:bg-white dark:text-black h-4/6 flex items-center justify-center">
-        {loading ? (
-          <button type="button" className="bg-indigo-500 ..." disabled>
-            <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
-              Loading
-            </svg>
-            Processing...
-          </button>
-        ) : (
-          <form
-            onSubmit={handleSubmit(onSubmitClient)}
-            className="container flex flex-col mx-auto space-y-12"
-          >
-            <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-white">
-              <div className="space-y-2 col-span-full lg:col-span-1">
-                <p className="font-medium">Problem Specification</p>
-                <p className="text-xs">
-                  Net vision community really appreciate your feedback and
-                  inform your situation, Please do not feel hesitations to tell
-                  your problem you are facing right now. Soon our community
-                  person will contact with you. Thank you
-                </p>
-              </div>
-              <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                <div className="col-span-full sm:col-span-3">
-                  <label className="text-sm">First name</label>
-                  <input
-                    {...register("firstName", { required: true })}
-                    id="firstname"
-                    type="text"
-                    placeholder="First name"
-                    className="w-full border-b-2 border-black p-2"
-                  />
-                </div>
-                <div className="col-span-full sm:col-span-3">
-                  <label className="text-sm">Last name</label>
-                  <input
-                    {...register("lastName", { required: false })}
-                    id="lastname"
-                    type="text"
-                    placeholder="Last name"
-                    className="w-full border-b-2 border-black p-2"
-                  />
-                </div>
-                <div className="col-span-2 ">
-                  <label className="text-sm">Email</label>
-                  <input
-                    defaultValue={sessionStorage.getItem("email") || ""}
-                    {...register("email", { required: true })}
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                    className="w-full border-b-2 border-black p-2"
-                  />
-                </div>
-                <div className="col-span-2">
-                  <label className="text-sm">Address</label>
-                  <input
-                    {...register("address", { required: true })}
-                    id="address"
-                    type="text"
-                    placeholder=""
-                    className="w-full border-b-2 border-black p-2"
-                  />
-                </div>
-                <div className="col-span-1 sm:col-span-2">
-                  <label className="text-sm">City</label>
-                  <input
-                    {...register("city", { required: false })}
-                    id="city"
-                    type="text"
-                    placeholder=""
-                    className="w-full border-b-2 border-black p-2"
-                  />
-                </div>
-                <div className="col-span-full">
-                  <label className="text-sm">Descriptions</label>
-                  <input
-                    {...register("description", { required: true })}
-                    type="text"
-                    placeholder=""
-                    className="w-full border-b-2 border-black p-2"
-                  />
-                </div>
-                <button
-                  className="login-btn bg-indigo-600 rounded col-span-full"
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </div>
-            </fieldset>
-          </form>
-        )}
-      </section> */}
-      <section className="p-6 border dark:bg-white dark:text-black flex items-center justify-center">
-        <button onClick={toggleModal} className="bg-indigo-600 text-white py-2 px-4 rounded">
-          Open Complaint Form
+      <section className="px-2 dark:bg-white dark:text-black">
+        <button
+          onClick={toggleModal}
+          className="bg-indigo-600 text-white py-2 px-4 rounded"
+        >
+          New Complain
         </button>
-        <ClientComplainModal
-          isOpen={modalOpen}
-          closeModal={toggleModal}
-          onSubmitClient={onSubmitClient}
-          setLoading={setLoading}
-          register={register}
-          handleSubmit={handleSubmit}
-          reset={reset}
-          refetch={refetch}
-        />
       </section>
 
       {/* table */}
+      <div className="px-2">
+        <ClientDashboardTable complains={states.complains} />
+      </div>
+      {/* modal open/close here */}
       <div>
-        <ClientDashboardTable
-          complains={states.complains}
-        />
+        {modalOpen && (
+          <ClientComplainModal
+            isOpen={modalOpen}
+            closeModal={toggleModal}
+            onSubmitClient={onSubmitClient}
+            setLoading={setLoading}
+            register={register}
+            handleSubmit={handleSubmit}
+            reset={reset}
+            refetch={refetch}
+          />
+        )}
       </div>
     </div>
   );
