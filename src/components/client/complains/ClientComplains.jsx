@@ -3,18 +3,23 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { db } from "../../config/firebase.config";
 import ClientDashboardTable from "../home/components/ClientDashboardTable";
-import ClientComplainModal from "./ClientComplainModal";
+import ClientComplainModal from "./components/ClientComplainModal";
 
 export default function ClientComplains() {
-  const { register, handleSubmit, reset } = useForm();
-  // eslint-disable-next-line no-unused-vars
+  const { reset } = useForm();
+  const [states, setStates] = useState({ complains: [], totalComplains: 0, user: {} });
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const promoCode = sessionStorage.getItem("validUser").slice(0, 8);
+
+  useEffect(() => {
+    fetchComplains();
+  }, []);
+
   const toggleModal = () => {
     setModalOpen(!modalOpen);
   };
 
-  const promoCode = sessionStorage.getItem("validUser").slice(0, 8);
   const onSubmitClient = async (data) => {
     console.log(data);
     setLoading(true);
@@ -23,7 +28,6 @@ export default function ClientComplains() {
         ...data,
         createAt: new Date().toLocaleDateString(),
       });
-      console.log("Document written with ID: ", docRef);
       reset();
       setLoading(false);
     } catch (e) {
@@ -32,35 +36,27 @@ export default function ClientComplains() {
     }
   };
 
-  const [states, setState] = useState({ complains: [], totalComplains: 0 });
-
   const fetchComplains = async () => {
-    // console.log("FetchComplains");
     const email = sessionStorage.getItem("email");
     const complainsRef = collection(db, "complains");
     const q = query(complainsRef, where("email", "==", email));
     const totalComplains = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data());
       totalComplains.push(doc.data());
     });
     console.log("FetchComplains", totalComplains);
-    setState({
+    setStates({
       ...states,
       complains: totalComplains,
       totalComplains: totalComplains.length,
     });
   };
 
-  useEffect(() => {
-    fetchComplains();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const refetch = () => {
     fetchComplains();
   };
+
 
   return (
     <div className="h-[100vh] bg-white">
@@ -108,12 +104,10 @@ export default function ClientComplains() {
           <ClientComplainModal
             isOpen={modalOpen}
             closeModal={toggleModal}
-            onSubmitClient={onSubmitClient}
             setLoading={setLoading}
-            register={register}
-            handleSubmit={handleSubmit}
             reset={reset}
             refetch={refetch}
+            onSubmitClient={onSubmitClient}
           />
         )}
       </div>
