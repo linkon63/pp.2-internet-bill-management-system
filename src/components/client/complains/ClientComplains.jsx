@@ -7,7 +7,11 @@ import ClientComplainModal from "./components/ClientComplainModal";
 
 export default function ClientComplains() {
   const { reset } = useForm();
-  const [states, setStates] = useState({ complains: [], totalComplains: 0, user: {} });
+  const [states, setStates] = useState({
+    complains: [],
+    totalComplains: 0,
+    user: {},
+  });
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const promoCode = sessionStorage.getItem("validUser").slice(0, 8);
@@ -20,7 +24,7 @@ export default function ClientComplains() {
     setModalOpen(!modalOpen);
   };
 
-  const onSubmitClient = async (data) => {
+  const onSubmitComplains = async (data) => {
     console.log(data);
     setLoading(true);
     try {
@@ -56,7 +60,6 @@ export default function ClientComplains() {
   const refetch = () => {
     fetchComplains();
   };
-
 
   return (
     <div className="h-[100vh] bg-white">
@@ -104,10 +107,11 @@ export default function ClientComplains() {
           <ClientComplainModal
             isOpen={modalOpen}
             closeModal={toggleModal}
+            loading={loading}
             setLoading={setLoading}
             reset={reset}
             refetch={refetch}
-            onSubmitClient={onSubmitClient}
+            onSubmitComplains={onSubmitComplains}
           />
         )}
       </div>

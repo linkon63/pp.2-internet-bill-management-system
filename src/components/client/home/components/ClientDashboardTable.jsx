@@ -1,5 +1,6 @@
 "use client";
 import { Badge, Table } from "flowbite-react";
+import Loading from "../../../shared/Loading";
 
 export default function ClientDashboardTable({ complains }) {
   console.log(complains);
@@ -16,6 +17,7 @@ export default function ClientDashboardTable({ complains }) {
         <Table.Body className="divide-y">
           {
             // eslint-disable-next-line react/prop-types
+
             complains.map((item, index) => (
               <Table.Row
                 key={index}
