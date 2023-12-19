@@ -52,22 +52,23 @@ Payments: Secure payment processing through the Stripe payment gateway.
 
 # Getting Started
 To run the project locally, follow these steps:
-
+---
 *Clone the repository*.
 *Install dependencies using npm install*.
 *Configure Firebase Firestore and obtain Stripe API keys*.
 *Set up environment variables for configuration*.
 *Run the application using npm start*.
 *Configuration*
+---
 Make sure to set up the necessary environment variables for Firebase and Stripe configuration. Refer to the .env.example file for guidance.
-
+---
 bash
 Copy code
 REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
 REACT_APP_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 REACT_APP_FIREBASE_PROJECT_ID=your_firebase_project_id
 REACT_APP_STRIPE_PUBLIC_KEY=your_stripe_public_key
-
+---
 # Why Contribute?
 **Real-world Impact**: Contribute to a project that directly addresses the challenges faced by internet service providers and customers. Your code will have a tangible impact on how people manage their internet bills.
 
