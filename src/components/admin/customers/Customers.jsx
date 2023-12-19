@@ -13,22 +13,17 @@ export default function Customers() {
   useEffect(() => {
     fetchCustomers();
     console.log("fetch again customer", states.customers);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openModal]);
 
   const fetchCustomers = async () => {
-    // console.log("fetchCustomers");
     const email = sessionStorage.getItem("email");
     const customersRef = collection(db, "customers");
-    //   const q = query(complainsRef, where("email", "==", email));
     const q = query(customersRef);
     const totalCustomers = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data());
       totalCustomers.push(doc.data());
     });
-    console.log("Customers", totalCustomers);
     setState({
       ...states,
       customers: totalCustomers,
@@ -73,6 +68,7 @@ export default function Customers() {
           cost: "",
           address: "",
         }}
+        key={Math.random()}
       />
     </div>
   );
