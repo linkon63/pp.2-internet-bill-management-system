@@ -125,9 +125,9 @@ export const SignInPage = () => {
                       Sign in
                     </button>
                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Don’t have an account yet? //{" "}
+                      Don’t have an account yet contract with admin?
                       <button className="font-medium text-yellow-600 hover:underline dark:text-primary-500">
-                        <Link to="/sign-up">Sign up</Link>
+                        {/* <Link to="/sign-up">Sign up</Link> */}
                       </button>
                     </p>
                   </div>
