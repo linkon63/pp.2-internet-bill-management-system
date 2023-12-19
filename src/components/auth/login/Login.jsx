@@ -27,7 +27,7 @@ export const SignInPage = () => {
       sessionStorage.setItem("validUser", doc.id);
       sessionStorage.setItem("email", doc.data().email);
       sessionStorage.setItem("password", doc.data().password);
-      sessionStorage.setItem("user", doc.data());
+      sessionStorage.setItem("user", JSON.stringify(doc.data()));
       if (doc.data().admin == true) {
         sessionStorage.setItem("admin", doc.data().admin);
       }
