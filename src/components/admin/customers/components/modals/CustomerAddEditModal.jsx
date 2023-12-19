@@ -7,12 +7,12 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "flowbite-react";
 import { db } from "../../../../config/firebase.config";
 import Loading from "../../../../shared/Loading";
+
 export function CustomerAddEditModal({
   openModal,
   setOpenModal,
@@ -26,7 +26,6 @@ export function CustomerAddEditModal({
     },
   });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   function onCloseModal() {
     setOpenModal(false);
@@ -160,7 +159,6 @@ export function CustomerAddEditModal({
                     Save customer
                   </Button>
                 </div>
-                {/* <button className="reg-btn">Sign up</button> */}
               </form>
             )}
           </div>
