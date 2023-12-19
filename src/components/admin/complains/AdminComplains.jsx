@@ -32,7 +32,7 @@ export default function AdminComplains() {
   }, []);
 
   return <div>
-    <div className="px-2">
+    <div className="px-2 border border-red-800">
         <ClientDashboardTable complains={states.complains} />
       </div>
   </div>;

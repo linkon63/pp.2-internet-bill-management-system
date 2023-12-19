@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { CustomerAddEditModal } from "./modals/CustomerAddEditModal";
+import Loading from "../../../shared/Loading";
 
-export default function CustomerTable({ customer }) {
-  console.log("🧑‍💻🧑‍💻🧑‍💻🧑‍💻", customer);
+export default function CustomerTable({ customer, loading }) {
+  const [openModal, setOpenModal] = useState(false);
+  const [selectCustomer, setSelectCustomer] = useState({});
+  function onCloseModal() {
+    setOpenModal(false);
+    setSelectCustomer({});
+  }
   return (
     <div>
-      <div className="w-12/12 h-100">
+      <div className="w-12/12 h-80">
         <div className="">
           <div className="overflow-x-auto sm:-mx-8 sm:px-8">
             <div className="inline-block min-w-full overflow-hidden rounded-lg shadow">
@@ -51,13 +57,17 @@ export default function CustomerTable({ customer }) {
                     Action
                   </th>
                 </tr>
-                <tbody className="h-vh">
+                <tbody className="h-vh w-full">
+                  {loading && (
+                    <tr className="">
+                      <td className="col" colSpan="6">
+                        <Loading />
+                      </td>
+                    </tr>
+                  )}
                   {customer.length > 0 &&
                     customer.map((c, index) => (
-                      <tr
-                        key={c.name + index}
-                        onClick={() => console.log("c", c)}
-                      >
+                      <tr key={c.name + index}>
                         <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                           <p className="text-gray-900 whitespace-no-wrap">
                             {index + 1}
@@ -87,7 +97,10 @@ export default function CustomerTable({ customer }) {
                           <button
                             type="button"
                             className="px-4"
-                            onClick={() => console.log("edit user")}
+                            onClick={() => {
+                              setSelectCustomer({ ...c });
+                              setOpenModal(true);
+                            }}
                           >
                             <svg
                               className="w-6 h-6 text-gray-800 dark:text-white"
@@ -101,8 +114,8 @@ export default function CustomerTable({ customer }) {
                           </button>
                           <button
                             type="button"
+                            onClick={() => console.log("delete user", c)}
                             className=""
-                            onClick={() => console.log("delete user")}
                           >
                             <svg
                               className="w-6 h-6 text-gray-800 dark:text-white"
@@ -123,6 +136,18 @@ export default function CustomerTable({ customer }) {
           </div>
         </div>
       </div>
+      {/* customer add modals */}
+      {openModal && (
+        <CustomerAddEditModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          onCloseModal={onCloseModal}
+          onAdd={false}
+          customerDefaultValue={{
+            ...selectCustomer,
+          }}
+        />
+      )}
     </div>
   );
 }

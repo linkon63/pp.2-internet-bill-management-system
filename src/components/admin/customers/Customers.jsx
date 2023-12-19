@@ -7,33 +7,32 @@ import { CustomerAddEditModal } from "./components/modals/CustomerAddEditModal";
 
 export default function Customers() {
   const [states, setState] = useState({ customers: [], totalCustomers: 0 });
-  const [allCustomer, setAllCustomers] = useState([...generatesFakeData[0]]);
   const [openModal, setOpenModal] = useState(false);
-
+  const [loading, setLoading] = useState(true);
+  const [fresh, setRefresh] = useState(false);
   useEffect(() => {
     fetchCustomers();
-    console.log("fetch again customer", states.customers);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [openModal]);
+    console.log("Customer Fetch and refresh");
+    setRefresh(false);
+  }, [fresh]);
 
   const fetchCustomers = async () => {
+    setLoading(true);
     // console.log("fetchCustomers");
     const email = sessionStorage.getItem("email");
     const customersRef = collection(db, "customers");
-    //   const q = query(complainsRef, where("email", "==", email));
     const q = query(customersRef);
     const totalCustomers = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data());
       totalCustomers.push(doc.data());
     });
-    console.log("Customers", totalCustomers);
     setState({
       ...states,
       customers: totalCustomers,
       totalCustomers: totalCustomers.length,
     });
+    setLoading(false);
   };
 
   function onCloseModal() {
@@ -55,6 +54,8 @@ export default function Customers() {
           key={Math.random()}
           openModal={openModal}
           setOpenModal={setOpenModal}
+          loading={loading}
+          setLoading={setLoading}
         />
       </div>
 
@@ -73,6 +74,8 @@ export default function Customers() {
           cost: "",
           address: "",
         }}
+        setRefresh={setRefresh}
+        key={Math.random()}
       />
     </div>
   );

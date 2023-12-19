@@ -1,15 +1,24 @@
-import { addDoc, collection } from "firebase/firestore";
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Button, Modal } from "flowbite-react";
 import { db } from "../../../../config/firebase.config";
+import Loading from "../../../../shared/Loading";
 
 export function CustomerAddEditModal({
   openModal,
   setOpenModal,
   customerDefaultValue,
   onAdd,
+  setRefresh,
 }) {
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -17,39 +26,67 @@ export function CustomerAddEditModal({
     },
   });
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   function onCloseModal() {
     setOpenModal(false);
-    // setEmail("");
   }
 
   const onRegistrationCustomer = async (data) => {
-    console.log(data);
+    console.log("Add Customers", data);
     setLoading(true);
     try {
       const docRef = await addDoc(collection(db, "customers"), {
         ...data,
       });
-      console.log("Document written with ID: ", docRef);
       setLoading(false);
       sessionStorage.setItem("validUser", docRef.id);
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("password", data.password);
-      // navigate("/login");
       onCloseModal();
+      setLoading(false);
     } catch (e) {
       console.error("Error adding document: ", e);
-      setLoading(false);
       onCloseModal();
+      setLoading(false);
+      setRefresh(true);
     }
   };
   const onUpdateRegisteredCustomer = async (data) => {
-    console.log(data);
+    console.log("Update Customers", data);
+    setLoading(true);
+    const customerRef = collection(db, "customers");
+    const q = await query(customerRef, where("email", "==", data.email));
+    const querySnapshot = await getDocs(q);
+    let id = "";
+    querySnapshot.forEach((doc) => {
+      id = doc.id;
+    });
+    if (id) {
+      console.log("Update Customer", id);
+      try {
+        const docRef = await doc(db, "customers", id);
+        await updateDoc(docRef, {
+          ...data,
+        });
+        // console.log("Update Customer ref", docRef);
+        sessionStorage.setItem("validUser", docRef.id);
+        sessionStorage.setItem("email", data.email);
+        sessionStorage.setItem("password", data.password);
+        onCloseModal();
+        setLoading(false);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+        onCloseModal();
+        setLoading(false);
+      }
+    }
+
+    setLoading(false);
+    onCloseModal();
+    setRefresh(true);
   };
   return (
     <>
-      {/* <Button onClick={() => setOpenModal(true)}>Toggle modal</Button> */}
       <Modal show={openModal} size="md" onClose={onCloseModal} popup>
         <Modal.Header />
         <Modal.Body>
@@ -57,82 +94,73 @@ export function CustomerAddEditModal({
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
               Add Customer to our NetVision
             </h3>
-            <form
-              onSubmit={handleSubmit(
-                onAdd ? onRegistrationCustomer : onUpdateRegisteredCustomer
-              )}
-              className="py-4"
-            >
-              <label>Email Or User Name</label>
-              <input
-                className="w-full"
-                type="email"
-                {...register("email", { required: true })}
-                placeholder="user@gmail.com"
-              />{" "}
-              <br />
-              <label>User Name</label>
-              <input
-                className="w-full"
-                type="text"
-                {...register("userName", { required: true })}
-                placeholder="your name"
-              />
-              <label>Internet Id</label>
-              <input
-                className="w-full"
-                type="text"
-                {...register("internetID", { required: true })}
-                placeholder="internet id"
-              />
-              <label>Password</label>
-              <input
-                className="w-full"
-                type="password"
-                {...register("password", { required: true })}
-                placeholder="password"
-              />
-              <label>Package : 5/10/20/30 MBPS </label>
-              <input
-                className="w-full"
-                type="number"
-                {...register("package", { required: true })}
-                placeholder="Internet Package MBPS"
-              />
-              <label>Cost per month</label>
-              <input
-                className="w-full"
-                type="number"
-                {...register("cost", { required: true })}
-                placeholder="Per month cost"
-              />
-              <label>Address</label>
-              <input
-                className="w-full"
-                type="text"
-                {...register("address", { required: true })}
-                placeholder="address"
-              />
-              <br />
-              <div className="w-full pt-2">
-                <Button type="submit" className="w-full">
-                  Save customer
-                </Button>
-              </div>
-              {/* <button className="reg-btn">Sign up</button> */}
-            </form>
-            {/* <div className="w-full">
-              <Button>Log in to your account</Button>
-            </div> */}
-            {/* <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?&nbsp;
-              <a
-                href="#"
-                className="text-cyan-700 hover:underline dark:text-cyan-500"
+            {loading ? (
+              <Loading />
+            ) : (
+              <form
+                onSubmit={handleSubmit(
+                  onAdd ? onRegistrationCustomer : onUpdateRegisteredCustomer
+                )}
+                className="py-4"
               >
-                Create account
-              </a>
-            </div> */}
+                <label>Email Or User Name</label>
+                <input
+                  className="w-full"
+                  type="email"
+                  {...register("email", { required: true })}
+                  placeholder="user@gmail.com"
+                />{" "}
+                <br />
+                <label>User Name</label>
+                <input
+                  className="w-full"
+                  type="text"
+                  {...register("userName", { required: true })}
+                  placeholder="your name"
+                />
+                <label>Internet Id</label>
+                <input
+                  className="w-full"
+                  type="text"
+                  {...register("internetID", { required: true })}
+                  placeholder="internet id"
+                />
+                <label>Password</label>
+                <input
+                  className="w-full"
+                  type="password"
+                  {...register("password", { required: true })}
+                  placeholder="password"
+                />
+                <label>Package : 5/10/20/30 MBPS </label>
+                <input
+                  className="w-full"
+                  type="number"
+                  {...register("package", { required: true })}
+                  placeholder="Internet Package MBPS"
+                />
+                <label>Cost per month</label>
+                <input
+                  className="w-full"
+                  type="number"
+                  {...register("cost", { required: true })}
+                  placeholder="Per month cost"
+                />
+                <label>Address</label>
+                <input
+                  className="w-full"
+                  type="text"
+                  {...register("address", { required: true })}
+                  placeholder="address"
+                />
+                <br />
+                <div className="w-full pt-2">
+                  <Button type="submit" className="w-full">
+                    Save customer
+                  </Button>
+                </div>
+              </form>
+            )}
           </div>
         </Modal.Body>
       </Modal>
