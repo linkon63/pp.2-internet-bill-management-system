@@ -59,7 +59,7 @@ export default function Layout() {
                 <div>
                   <li className="rounded-sm hover:shadow hover:text-white hover:bg-indigo-600 hover:rounded-lg">
                     <Link
-                      to="/dashboard"
+                      to="/admin/dashboard"
                       className="flex items-center p-2 space-x-3 rounded-md"
                     >
                       <svg
@@ -74,7 +74,7 @@ export default function Layout() {
                   </li>
                   <li className="rounded-sm hover:shadow hover:text-white hover:bg-indigo-600 hover:rounded-lg">
                     <Link
-                      to="/customers"
+                      to="/admin/customers"
                       className="flex items-center p-2 space-x-3 rounded-md"
                     >
                       <svg
