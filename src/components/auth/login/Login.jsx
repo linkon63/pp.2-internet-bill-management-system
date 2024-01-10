@@ -21,6 +21,7 @@ export const SignInPage = () => {
     );
     const querySnapshot = await getDocs(q);
     let loginFlag = false;
+    let admin = false;
     querySnapshot.forEach((doc) => {
       console.log(doc.id, " => ", doc.data());
       loginFlag = true;
@@ -30,8 +31,15 @@ export const SignInPage = () => {
       sessionStorage.setItem("user", JSON.stringify(doc.data()));
       if (doc.data().admin == true) {
         sessionStorage.setItem("admin", doc.data().admin);
+        admin = true
       }
     });
+
+    if(loginFlag === true && admin){
+      navigate("/admin/dashboard")
+      setLoading(false)
+      return
+    }
     if (loginFlag === true) {
       navigate("/home");
     } else {
