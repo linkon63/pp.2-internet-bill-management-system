@@ -11,6 +11,7 @@ import AdminDashboard from "../admin/dashboard/AdminDashboard";
 import { SignInPage } from "../auth/login/Login";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import AdminTechnician from "../admin/technicians/AdminTechnicians";
 
 export const PageRoutes = [
   {
@@ -37,6 +38,10 @@ export const PageRoutes = [
       {
         path: "/admin/complains-service",
         element: <AdminComplains />,
+      },
+      {
+        path: "/admin/technicians",
+        element: <AdminTechnician />,
       },
       //client routes
       {
