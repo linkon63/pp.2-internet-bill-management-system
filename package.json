@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@stripe/react-stripe-js": "^2.4.0",
-    "@stripe/stripe-js": "^2.2.0",
+    "@stripe/react-stripe-js": "^2.5.0",
+    "@stripe/stripe-js": "^2.4.0",
     "apexcharts": "^3.44.0",
     "firebase": "^10.5.2",
     "flowbite-react": "^0.6.4",
