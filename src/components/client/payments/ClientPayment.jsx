@@ -84,29 +84,6 @@ const options = {
 
 export default function ClientPayment() {
   const user = JSON.parse(sessionStorage.getItem('user'));
-  const [paymentShow, setPaymentShow] = useState(false)
-  const { register, handleSubmit, reset } = useForm({
-
-  });
-
-  const onSubmitClient = async (data) => {
-    console.log(data);
-    setLoading(true);
-    try {
-      const docRef = await addDoc(collection(db, "payments"), {
-        ...data,
-        paymentStatus: true,
-        createAt: new Date().toLocaleDateString(),
-      });
-      console.log("Document written with ID: ", docRef);
-      reset();
-      setLoading(false);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      setLoading(false);
-    }
-  };
-
   return (
     <div className='bg-white p-10 h-[100vh]'>
       <h1>Your Bill Payment should be here</h1>
@@ -141,6 +118,7 @@ export default function ClientPayment() {
                 <label className="text-sm">Payment</label>
                 <input
                   defaultValue={user.cost || 500}
+                  readOnly
                   id="payment"
                   type="number"
                   placeholder="500 tk"
