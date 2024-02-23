@@ -9,7 +9,7 @@ import {
 } from '@stripe/react-stripe-js';
 import { useForm } from 'react-hook-form';
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -61,7 +61,7 @@ const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button type="submit" disabled={!stripe || !elements}>
+      <button className='btn bg-blue-400 w-full p-4 mt-5 text-white font-bold rounded-md' type="submit" disabled={!stripe || !elements}>
         Pay
       </button>
       {/* Show error message to your customers */}
@@ -83,6 +83,7 @@ const options = {
 };
 
 export default function ClientPayment() {
+  const user = JSON.parse(sessionStorage.getItem('user'));
   const [paymentShow, setPaymentShow] = useState(false)
   const { register, handleSubmit, reset } = useForm({
 
@@ -109,8 +110,7 @@ export default function ClientPayment() {
   return (
     <div className='bg-white p-10 h-[100vh]'>
       <h1>Your Bill Payment should be here</h1>
-      <form
-        onSubmit={handleSubmit(onSubmitClient)}
+      <div
         className="container flex flex-col mx-auto space-y-12 mt-10"
       >
         <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-white">
@@ -124,53 +124,38 @@ export default function ClientPayment() {
             </p>
           </div>
           <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-            <div className="col-span-full sm:col-span-3">
-              <label className="text-sm">Email</label>
-              <input
-                defaultValue={sessionStorage.getItem("email") || ""}
-                {...register("email", { required: true })}
-                id="email"
-                type="email"
-                placeholder="Email"
-                className="w-full border-b-2 border-black p-2"
-              />
+            <div className='col-span-full'>
+
+              <div className="col-span-full sm:col-span-3">
+                <label className="text-sm">Email</label>
+                <input
+                  defaultValue={sessionStorage.getItem("email") || ""}
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  className="w-full border-b-2 border-black p-2"
+                  readOnly
+                />
+              </div>
+              <div className="col-span-full sm:col-span-2 mb-4">
+                <label className="text-sm">Payment</label>
+                <input
+                  defaultValue={user.cost || 500}
+                  id="payment"
+                  type="number"
+                  placeholder="500 tk"
+                  className="w-full border-b-2 border-black p-2"
+                />
+              </div>
+              <Elements stripe={stripePromise} options={options}>
+                <CheckoutForm />
+              </Elements>
             </div>
-            <div className="col-span-full sm:col-span-2">
-              <label className="text-sm">Payment</label>
-              <input
-                {...register("Payment", { required: false })}
-                id="payment"
-                type="number"
-                placeholder="500 tk"
-                className="w-full border-b-2 border-black p-2"
-              />
-            </div>
-            <div className="col-span-full sm:col-span-2">
-              <label className="text-sm">Date</label>
-              <input
-                {...register("date", { required: false })}
-                id="date"
-                type="date"
-                className="w-full border-b-2 border-black p-2"
-              />
-            </div>
-            <div className="col-span-full sm:col-span-2">
-              <button
-                className="login-btn bg-indigo-600 rounded w-100 p-2 mt-6"
-                type="submit"
-              >
-                Submit
-              </button>
-            </div>
+
           </div>
         </fieldset>
-      </form>
-      {
-        paymentShow &&
-        <Elements stripe={stripePromise} options={options}>
-          <CheckoutForm />
-        </Elements>
-      }
+      </div>
+
     </div>
   )
 }
