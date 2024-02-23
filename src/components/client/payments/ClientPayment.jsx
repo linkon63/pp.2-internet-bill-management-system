@@ -141,6 +141,7 @@ export default function ClientPayment() {
                 <label className="text-sm">Payment</label>
                 <input
                   defaultValue={user.cost || 500}
+                  readOnly
                   id="payment"
                   type="number"
                   placeholder="500 tk"
