@@ -10,10 +10,13 @@ import {
   where,
 } from "@firebase/firestore";
 import { db } from "../../../config/firebase.config";
+import CustomerDeleteModal from "./modals/CustomerDeleteModal";
 
 export default function CustomerTable({ customer, loading, setRefresh }) {
   const [openModal, setOpenModal] = useState(false);
+  const [openDModal, setOpenDModal] = useState(false);
   const [selectCustomer, setSelectCustomer] = useState({});
+
   function onCloseModal() {
     setOpenModal(false);
     setSelectCustomer({});
@@ -144,7 +147,10 @@ export default function CustomerTable({ customer, loading, setRefresh }) {
                           </button>
                           <button
                             type="button"
-                            onClick={() => onDeleteRegisteredCustomer(c)}
+                            onClick={() => {
+                              setSelectCustomer({ ...c });
+                              setOpenDModal(true);
+                            }}
                             className=""
                           >
                             <svg
@@ -178,6 +184,15 @@ export default function CustomerTable({ customer, loading, setRefresh }) {
           customerDefaultValue={{
             ...selectCustomer,
           }}
+        />
+      )}
+      {openDModal && (
+        <CustomerDeleteModal
+          key={Math.random()}
+          openModal={openDModal}
+          setOpenModal={setOpenDModal}
+          onDeleteRegisteredCustomer={onDeleteRegisteredCustomer}
+          selectCustomer={selectCustomer}
         />
       )}
     </div>
