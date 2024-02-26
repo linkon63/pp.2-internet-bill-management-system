@@ -1,14 +1,44 @@
 import { useState } from "react";
 import { CustomerAddEditModal } from "./modals/CustomerAddEditModal";
 import Loading from "../../../shared/Loading";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "@firebase/firestore";
+import { db } from "../../../config/firebase.config";
 
-export default function CustomerTable({ customer, loading }) {
+export default function CustomerTable({ customer, loading, setRefresh }) {
   const [openModal, setOpenModal] = useState(false);
   const [selectCustomer, setSelectCustomer] = useState({});
   function onCloseModal() {
     setOpenModal(false);
     setSelectCustomer({});
   }
+
+  const onDeleteRegisteredCustomer = async (data) => {
+    console.log("Customer will deleted", data);
+    if (data.admin) {
+      console.log("You can not delete a admin");
+      return;
+    }
+    const customerRef = collection(db, "customers");
+
+    const q = await query(customerRef, where("email", "==", data.email));
+    const querySnapshot = await getDocs(q);
+    let id = "";
+    querySnapshot.forEach((doc) => {
+      id = doc.id;
+    });
+    if (id) {
+      console.log("id has deleted", id);
+      await deleteDoc(doc(db, "customers", id));
+      setRefresh(true);
+    }
+  };
   return (
     <div>
       <div className="w-12/12 h-80">
@@ -61,7 +91,7 @@ export default function CustomerTable({ customer, loading }) {
                   {loading && (
                     <tr className="">
                       <td className="col" colSpan="6">
-                        <Loading />
+                        <Loading key={Math.random()} />
                       </td>
                     </tr>
                   )}
@@ -114,7 +144,7 @@ export default function CustomerTable({ customer, loading }) {
                           </button>
                           <button
                             type="button"
-                            onClick={() => console.log("delete user", c)}
+                            onClick={() => onDeleteRegisteredCustomer(c)}
                             className=""
                           >
                             <svg
@@ -139,10 +169,12 @@ export default function CustomerTable({ customer, loading }) {
       {/* customer add modals */}
       {openModal && (
         <CustomerAddEditModal
+          key={Math.random()}
           openModal={openModal}
           setOpenModal={setOpenModal}
           onCloseModal={onCloseModal}
           onAdd={false}
+          setRefresh={setRefresh}
           customerDefaultValue={{
             ...selectCustomer,
           }}

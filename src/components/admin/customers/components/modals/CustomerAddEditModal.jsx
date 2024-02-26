@@ -38,7 +38,6 @@ export function CustomerAddEditModal({
       const docRef = await addDoc(collection(db, "customers"), {
         ...data,
       });
-      setLoading(false);
       sessionStorage.setItem("validUser", docRef.id);
       sessionStorage.setItem("email", data.email);
       sessionStorage.setItem("password", data.password);
@@ -74,16 +73,13 @@ export function CustomerAddEditModal({
         sessionStorage.setItem("password", data.password);
         onCloseModal();
         setLoading(false);
+        setRefresh(true)
       } catch (e) {
         console.error("Error adding document: ", e);
         onCloseModal();
         setLoading(false);
       }
     }
-
-    setLoading(false);
-    onCloseModal();
-    setRefresh(true);
   };
   return (
     <>

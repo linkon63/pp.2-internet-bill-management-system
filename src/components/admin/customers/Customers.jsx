@@ -56,11 +56,12 @@ export default function Customers() {
           setOpenModal={setOpenModal}
           loading={loading}
           setLoading={setLoading}
+          setRefresh={setRefresh}
         />
       </div>
 
       {/* customer add modals */}
-      <CustomerAddEditModal
+      {/* <CustomerAddEditModal
         openModal={openModal}
         setOpenModal={setOpenModal}
         onCloseModal={onCloseModal}
@@ -76,7 +77,7 @@ export default function Customers() {
         }}
         setRefresh={setRefresh}
         key={Math.random()}
-      />
+      /> */}
     </div>
   );
 }
