@@ -47,8 +47,8 @@ export function CustomerAddEditModal({
       console.error("Error adding document: ", e);
       onCloseModal();
       setLoading(false);
-      setRefresh(true);
     }
+    setRefresh(true);
   };
   const onUpdateRegisteredCustomer = async (data) => {
     console.log("Update Customers", data);
